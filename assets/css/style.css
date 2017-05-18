@@ -1,0 +1,22 @@
+.jumbotron {
+    background-image: url("AmericanFlag.jpg");
+}
+
+.text-center {
+    background-color: white;
+}
+
+.btn {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 10px;
+    padding: 5px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
