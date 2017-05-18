@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giphy Search</title>
+    <!-- Bootstrap Link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="jumbotron" style="background-color:">
+        <h1 class="text-center"> <strong>GIPHY SEARCH</strong></h1>
+    </div>
+    <div id="buttons">
+        <button data-person="arnold schwarzenegger">
+            I'll be back
+        </button>
+        <button data-person="michael j fox">
+            My happiness grows in direct proportion to my acceptance, and in inverse proportion to my expectations.
+        </button>
+        <button data-person="donald trump">
+            Huge
+        </button>
+        <button data-person="sean spicer">
+            Sean spicer
+        </button>
+        <button data-person="Colin Kaepernick">
+            sitting down
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label for="search">Search Term:</label>
+                <input id="searchText" type="text" class="form-control" >
+            </div>
+            <input id="submitButton" value= "submit" type="submit" class="btn btn-default"></input>
+        </div>
+        <div class="col-xs-8">
+            <div id="gifs-appear-here">
+            </div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript">
+    
+    var gifyList = [];
+
+   $("#submitButton").on("click",function(){
+    event.preventDefault();
+
+    var userInput = $("#searchText").val().trim();
+
+    gifyList.push(userInput);
+
+
+    console.log(gifyList);
+
+    var gifyButton = $("<button>");
+
+    gifyButton.attr("data-person", userInput);
+    gifyButton.append(userInput);
+
+
+    $("#buttons").append(gifyButton);
+
+
+
+
+    // var userInput = $("#searchText").val().trim();
+
+
+
+
+});
+
+
+
+    $("button").on("click", function() {
+        var person = $(this).attr("data-person");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+            person + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+        $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+            .done(function(response) {
+                var results = response.data;
+
+                for (var i = 0; i < results.length; i++) {
+                    var gifDiv = $("<div class='item'>");
+
+                    var rating = results[i].rating;
+
+                    var p = $("<p>").text("Rating: " + rating);
+
+                    var personImage = $("<img>");
+                    personImage.attr("src", results[i].images.fixed_height.url);
+
+                    gifDiv.prepend(p);
+                    gifDiv.prepend(personImage);
+
+                    $("#gifs-appear-here").prepend(gifDiv);
+                }
+            });
+    });
+    </script>
+</body>
+
+</html>
