@@ -85,7 +85,7 @@ $("body").on("click", "button", function() {
         });
 });
 $(document).on("click", ".gifImages", function() {
-    console.log("click");
+    
     var state = $(this).attr("data-state");
     if (state === "still") {
         console.log("animate");
